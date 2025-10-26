@@ -1,0 +1,42 @@
+[
+  {
+    "event_type": "brunch",
+    "city": "Delhi",
+    "date": "2025-10-29",
+    "preferences": {
+      "color": "pastel",
+      "fabric": "cotton",
+      "style": "casual"
+    }
+  },
+  {
+    "event_type": "office",
+    "city": "Bangalore",
+    "date": "2025-11-01",
+    "preferences": {
+      "color": "white",
+      "fabric": "wool",
+      "style": "formal"
+    }
+  },
+  {
+    "event_type": "rooftop party",
+    "city": "Mumbai",
+    "date": "2025-11-05",
+    "preferences": {
+      "color": "light",
+      "fabric": "linen",
+      "style": "trendy"
+    }
+  },
+  {
+    "event_type": "dinner",
+    "city": "Delhi",
+    "date": "2025-12-15",
+    "preferences": {
+      "color": "dark",
+      "fabric": "wool",
+      "style": "formal"
+    }
+  }
+]

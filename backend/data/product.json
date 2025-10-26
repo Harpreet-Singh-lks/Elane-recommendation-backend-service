@@ -1,0 +1,86 @@
+[
+  {
+    "id": "p1",
+    "name": "Cotton White Shirt",
+    "category": "top",
+    "color": "white",
+    "fabric": "cotton",
+    "style": ["casual", "formal"],
+    "temperature_range": { "min": 20, "max": 35 },
+    "city_availability": ["Delhi", "Mumbai", "Bangalore"],
+    "delivery_days": 2,
+    "buy_link": "https://example.com/cotton-white-shirt"
+  },
+  {
+    "id": "p2",
+    "name": "Linen Beige Trousers",
+    "category": "bottom",
+    "color": "beige",
+    "fabric": "linen",
+    "style": ["casual", "summer"],
+    "temperature_range": { "min": 22, "max": 40 },
+    "city_availability": ["Delhi", "Chennai"],
+    "delivery_days": 3,
+    "buy_link": "https://example.com/linen-beige-trousers"
+  },
+  {
+    "id": "p3",
+    "name": "Navy Blue Blazer",
+    "category": "outer",
+    "color": "navy",
+    "fabric": "wool",
+    "style": ["formal"],
+    "temperature_range": { "min": 10, "max": 25 },
+    "city_availability": ["Delhi", "Bangalore"],
+    "delivery_days": 4,
+    "buy_link": "https://example.com/navy-blue-blazer"
+  },
+  {
+    "id": "p4",
+    "name": "Casual Sneakers",
+    "category": "shoes",
+    "color": "white",
+    "fabric": "synthetic",
+    "style": ["casual", "trendy"],
+    "temperature_range": { "min": 10, "max": 40 },
+    "city_availability": ["Delhi", "Mumbai", "Kolkata"],
+    "delivery_days": 1,
+    "buy_link": "https://example.com/casual-sneakers"
+  },
+  {
+    "id": "p5",
+    "name": "Black Leather Shoes",
+    "category": "shoes",
+    "color": "black",
+    "fabric": "leather",
+    "style": ["formal"],
+    "temperature_range": { "min": 10, "max": 30 },
+    "city_availability": ["Delhi", "Chennai"],
+    "delivery_days": 2,
+    "buy_link": "https://example.com/black-leather-shoes"
+  },
+  {
+    "id": "p6",
+    "name": "Pastel Pink Dress",
+    "category": "full",
+    "color": "pastel pink",
+    "fabric": "cotton",
+    "style": ["trendy", "casual"],
+    "temperature_range": { "min": 20, "max": 35 },
+    "city_availability": ["Mumbai", "Delhi"],
+    "delivery_days": 2,
+    "buy_link": "https://example.com/pastel-pink-dress"
+  },
+  {
+    "id": "p7",
+    "name": "Grey Wool Coat",
+    "category": "outer",
+    "color": "grey",
+    "fabric": "wool",
+    "style": ["formal", "winter"],
+    "temperature_range": { "min": 0, "max": 15 },
+    "city_availability": ["Delhi", "Shimla"],
+    "delivery_days": 5,
+    "buy_link": "https://example.com/grey-wool-coat"
+  }
+]
