@@ -1,20 +1,59 @@
 const bcrypt = require('bcryptjs');
-const UserProfileService = require('../services/userProfileService');
-const User = require('../models/User');
-const { sign } = require('../utils/jwt');
+const User = require('../models/userSchema');
+const UserProfile = require('../models/userProfile');
+const { generateToken } = require('../utils/jwt');
 
 const register = async (req, res, next) => {
   try {
-    const { email, password, firstName, lastName, sizeProfile, stylePreferences } = req.body;
-    if (!email || !password) return res.status(400).json({ error: 'email and password required' });
+    const { email, password, firstName, lastName } = req.body;
 
-    const existing = await User.findOne({ email });
-    if (existing) return res.status(409).json({ error: 'Email already in use' });
+    // Validate input
+    if (!email || !password) {
+      const error = new Error('Email and password are required');
+      error.statusCode = 400;
+      throw error;
+    }
 
-    const passwordHash = await bcrypt.hash(password, 12);
-    const user = await UserProfileService.createUser({ email, passwordHash, firstName, lastName, sizeProfile, stylePreferences });
+    // Check if user already exists
+    const existingUser = await User.findOne({ email });
+    if (existingUser) {
+      const error = new Error('User already exists with this email');
+      error.statusCode = 409;
+      throw error;
+    }
 
-    res.status(201).json({ success: true, data: { id: user._id, email: user.email } });
+    // Hash password
+    const salt = await bcrypt.genSalt(10);
+    const hashedPassword = await bcrypt.hash(password, salt);
+
+    // Create user
+    const user = await User.create({
+      email,
+      password: hashedPassword,
+      firstName: firstName || '',
+      lastName: lastName || ''
+    });
+
+    // Create user profile
+    await UserProfile.create({
+      userId: user._id,
+      email: user.email
+    });
+
+    // Generate token
+    const token = generateToken(user._id);
+
+    res.status(201).json({
+      success: true,
+      message: 'User registered successfully',
+      data: {
+        userId: user._id,
+        email: user.email,
+        firstName: user.firstName,
+        lastName: user.lastName
+      },
+      token
+    });
   } catch (err) {
     next(err);
   }
@@ -23,19 +62,60 @@ const register = async (req, res, next) => {
 const login = async (req, res, next) => {
   try {
     const { email, password } = req.body;
-    if (!email || !password) return res.status(400).json({ error: 'email and password required' });
 
-    const user = await User.findOne({ email });
-    if (!user) return res.status(401).json({ error: 'Invalid credentials' });
+    // Validate input
+    if (!email || !password) {
+      const error = new Error('Email and password are required');
+      error.statusCode = 400;
+      throw error;
+    }
 
-    const valid = await bcrypt.compare(password, user.passwordHash);
-    if (!valid) return res.status(401).json({ error: 'Invalid credentials' });
+    // Find user
+    const user = await User.findOne({ email }).select('+password');
+    if (!user) {
+      const error = new Error('Invalid credentials');
+      error.statusCode = 401;
+      throw error;
+    }
 
-    const token = sign({ userId: user._id, email: user.email });
-    res.json({ token, user: { id: user._id, email: user.email } });
+    // Check password
+    const isPasswordValid = await bcrypt.compare(password, user.password);
+    if (!isPasswordValid) {
+      const error = new Error('Invalid credentials');
+      error.statusCode = 401;
+      throw error;
+    }
+
+    // Generate token
+    const token = generateToken(user._id);
+
+    res.json({
+      success: true,
+      message: 'Login successful',
+      token,
+      user: {
+        id: user._id,
+        email: user.email,
+        firstName: user.firstName,
+        lastName: user.lastName
+      }
+    });
   } catch (err) {
     next(err);
   }
 };
 
-module.exports = { register, login };
+const logout = async (req, res, next) => {
+  try {
+    // In a stateless JWT system, logout is handled client-side
+    // But we can add token to a blacklist if needed
+    res.json({
+      success: true,
+      message: 'Logged out successfully'
+    });
+  } catch (err) {
+    next(err);
+  }
+};
+
+module.exports = { register, login, logout };

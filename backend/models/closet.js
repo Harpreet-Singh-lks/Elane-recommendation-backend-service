@@ -7,7 +7,6 @@ const UserClosetSchema = new mongoose.Schema({
   brand: String,
   color: String,
   size: String,
-  imageUrl: String,
   lastWornDate: Date,
   purchaseDate: Date,
   isFavorite: { type: Boolean, default: false }
